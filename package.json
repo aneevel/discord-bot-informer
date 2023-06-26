@@ -1,0 +1,25 @@
+{
+  "name": "discord-bot-informer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aneevel/discord-bot-informer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aneevel/discord-bot-informer/issues"
+  },
+  "homepage": "https://github.com/aneevel/discord-bot-informer#readme",
+  "dependencies": {
+    "discord.js": "^14.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.43.0"
+  }
+}
