@@ -29,23 +29,6 @@ for (const folder of commandFolders) {
   }
 }
 
-const rest = new REST().setToken(token);
-
-(async () => {
-  try {
-    console.log(`Started refreshing ${commands.length} application (/) commands.`);
-
-    const data = await rest.put( 
-      Routes.applicationGuildCommands(clientId, guildId),
-      { body: commands },
-    );
-
-    console.log(`Successfully reloaded ${data.length} application (/) commands.`);
-  } catch (error) {
-    console.error(error);
-  }
-})();
-
 client.on(Events.InteractionCreate, async interaction => {
 
   // There are interactions that are not slash commands, which we don't want to talk about
