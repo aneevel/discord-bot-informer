@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require("discord.js");
-const { token } = require("./config.json");
+const { REST, Routes, Client, Collection, Events, GatewayIntentBits } = require("discord.js");
+const { clientId, guildId, token } = require("./config.json");
 
 // Create a new client instance
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -28,6 +28,23 @@ for (const folder of commandFolders) {
     }
   }
 }
+
+const rest = new REST().setToken(token);
+
+(async () => {
+  try {
+    console.log(`Started refreshing ${commands.length} application (/) commands.`);
+
+    const data = await rest.put( 
+      Routes.applicationGuildCommands(clientId, guildId),
+      { body: commands },
+    );
+
+    console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+  } catch (error) {
+    console.error(error);
+  }
+})();
 
 client.on(Events.InteractionCreate, async interaction => {
 
