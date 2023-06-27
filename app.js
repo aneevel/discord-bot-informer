@@ -1,14 +1,15 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { REST, Routes, Client, Collection, Events, GatewayIntentBits } = require("discord.js");
+const { REST, Routes, Client, Collection, Events, GatewayIntentBits, Partials, ChannelType } = require("discord.js");
 const { clientId, guildId, token } = require("./config.json");
 
 // Create a new client instance
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages], 'partials': [Partials.Channel] });
 
 client.commands = new Collection();
 
 const foldersPath = path.join(__dirname, 'commands');
+
 const commandFolders = fs.readdirSync(foldersPath);
 
 for (const folder of commandFolders) {
@@ -52,6 +53,15 @@ client.on(Events.InteractionCreate, async interaction => {
     }
   }
   console.log(`Registered command ${interaction}`);
+});
+
+client.on(Events.MessageCreate, async message => {
+
+  // We don't want to reply to itself
+  if (message.author.id == client.user.id) return;
+
+    if (message.channel.type == ChannelType.DM)
+      message.author.send('Gatsby believed in the green light, the orgastic future that year by year recedes before us. It eluded us then, but that\'s no matter—tomorrow we will run faster, stretch out our arms farther. . . . And one fine morning——');
 });
 
 // When the client is ready, it is run
